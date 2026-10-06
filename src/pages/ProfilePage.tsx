@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { loadData, saveData, exportToJson, importFromJson, defaultData } from '../storage'
 import { useConfirm, useToast } from '../components/FeedbackContext'
 import type { AppData, Subject } from '../types'
@@ -14,6 +15,8 @@ const SUBJECT_COLORS = [
 ]
 
 export function ProfilePage() {
+  const navigate = useNavigate()
+
   useEffect(() => {
     document.title = 'Profile & Settings | Student Life Optimizer'
   }, [])
@@ -164,7 +167,9 @@ export function ProfilePage() {
     saveData(defaultData)
     setData(defaultData)
     toast.success('All data has been reset to defaults')
-    setTimeout(() => window.location.reload(), 600)
+    setTimeout(() => {
+      navigate('/', { replace: true })
+    }, 600)
   }
 
   return (
